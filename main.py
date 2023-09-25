@@ -82,7 +82,11 @@ def main(args):
     #mapa que irá armazenar o sentido de cada veiculo detectado
     id_to_last_side = {}
 
+    
+
     output_full_path = args.output_dir + "/" + args.output_filename
+
+    print("O arquivo de saída será salvo em: ", output_full_path)
     
     video_writer = cv2.VideoWriter(
                 output_full_path,
