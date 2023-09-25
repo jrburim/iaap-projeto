@@ -10,7 +10,7 @@ easydict
 gdown
 pandas
 tabulate
-typing-extensions==3.10.0.2
+typing-extensions==4.5.0
 wheel
 numpy==1.23.3
 asone-ocr
@@ -18,7 +18,11 @@ motpy
 ultralytics==8.0.109
 torchreid==0.2.5
 tensorboard
-protobuf==3.20
+protobuf==3.20.3
 # requirements for coreml
 onnxruntime
 coremltools
+urllib3==1.26.11
+cython
+cython-bbox
+torchreid
