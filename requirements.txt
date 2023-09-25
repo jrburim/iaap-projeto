@@ -26,3 +26,4 @@ urllib3==1.26.11
 Cython==3.0.2
 cython-bbox==0.1.3
 torchreid==0.2.5
+super_gradients==3.2.1
