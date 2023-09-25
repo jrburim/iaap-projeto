@@ -42,9 +42,20 @@ def main(args):
         detector = asone.YOLOV7_MLMODEL 
     else:
         detector = asone.YOLOX_DARKNET_PYTORCH
+
+    trackers = {
+            'bytetrack': asone.BYTETRACK,
+            'deepsort': asone.DEEPSORT,
+            'norfair': asone.NORFAIR,
+            'motpy': asone.MOTPY,
+            'ocsort': asone.OCSORT,
+            'strongsort': asone.STRONGSORT
+    }
+    
+    tracker = trackers.get(args.tracker, asone.BYTETRACK)        
     
     detect = ASOne(
-        tracker=asone.BYTETRACK,
+        tracker=tracker,
         detector=detector,
         weights=args.weights,
         use_cuda=args.use_cuda
@@ -57,8 +68,7 @@ def main(args):
                                 iou_thres=args.iou_thres,
                                 display=args.display,                                
                                 filter_classes=filter_classes,
-                                class_names=None) # class_names=['License Plate'] para pesos personalizados
-       
+                                class_names=None) # class_names=['License Plate'] para pesos personalizados       
 
 
     # linha horizontal no meio da imagem
@@ -72,8 +82,10 @@ def main(args):
     #mapa que irá armazenar o sentido de cada veiculo detectado
     id_to_last_side = {}
 
+    output_full_path = args.output_dir + "/" + args.output_filename
+    
     video_writer = cv2.VideoWriter(
-                "./results/test2.mp4",
+                output_full_path,
                 cv2.VideoWriter_fourcc(*"mp4v"),
                 29.97,
                 (int(1280), int(720)),
@@ -141,6 +153,8 @@ if __name__ == '__main__':
     parser.add_argument('--no_display', default=True, action='store_false',
                         dest='display', help='se exibir ou não os resultados na tela')
     parser.add_argument('--output_dir', default='data/results',  help='Caminho para o diretório de saída')
+    parser.add_argument('--output_filename', default='test.mp4', help='Nome do arquivo de saída')
+    parser.add_argument('--tracker', default='bytetrack',  help='Algoritmo do rastreador')
     parser.add_argument('--filter_classes', default=None, help='Nome da classe de filtro')
     parser.add_argument('-w', '--weights', default=None, help='Caminho dos pesos treinados')
     parser.add_argument('-ct', '--conf_thres', default=0.25, type=float, help='limiar de pontuação de confiança')
